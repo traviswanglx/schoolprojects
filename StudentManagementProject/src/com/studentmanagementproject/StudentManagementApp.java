@@ -1,3 +1,7 @@
+/**The purpose of this program is to allow users to input student details and compute the marks of the students and distribute grades, 
+ * calculate the average overall marks, the number of students falls above, equal, or below average marks, 
+ * the number of grades distributed, get the 2 highest score student details, sorting student list in ascending order,
+ * and calculate the standard deviation and so on. */
 package com.studentmanagementproject;
 
 import java.text.ParseException;
@@ -9,10 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-/**The purpose of this program is to allow users to input student details and compute the marks of the students and distribute grades, 
- * calculate the average overall marks, the number of students falls above, equal, or below average marks, 
- * the number of grades distributed, get the 2 highest score student details, sorting student list in ascending order,
- * and calculate the standard deviation and so on. */
 public class StudentManagementApp {
 
 	/**Global variables*/
