@@ -53,7 +53,7 @@ public class StudentManagementApp {
 	private static final String DD_MM_YYYY = "dd/MM/yyyy";
 	private static final String STUDENT_ADDED = "Student added";
 	private static final String STUDENT_ARE_IN_THE_LIST = " student are in the list.";
-	private static final String DATA_INITIALIZE = "Data initialize";
+	private static final String DATA_INITIALIZE = "Data initialize.";
 	private static final String STUDENT_NAME_NOT_FOUND = "student name not found";
 	private static final String SECOND_HIGHEST_OVERALL_MARKS = "The student with the second highest overall marks is ";
 	private static final String STUDENT_ID_NOT_FOUND = "student id not found";
@@ -139,6 +139,8 @@ public class StudentManagementApp {
 	private static final String COLUMN_EDIT = "Which column do you wish to edit?";
 	private static final String MAIN_MENU = "Going back to main menu";
 	private static final String SOMETHING_WENT_WRONG = "something went wrong.";
+	private static final String SPACE = " ";
+	private static final String EXIT_MESSAGE = "Program terminating.";
 
 	public static void main(String[] args) {
 
@@ -180,6 +182,7 @@ public class StudentManagementApp {
 					switch(option)
 					{
 					case 1:
+						System.out.println(EXIT_MESSAGE);
 						System.exit(0);
 						break;
 					case 2:
@@ -271,10 +274,13 @@ public class StudentManagementApp {
 	{
 		double overallMarks = ZERO_DOUBLE;
 
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			overallMarks = (student.getAssignment1Marks() * TWENTY/HUNDRED) + (student.getAssignment2Marks() * TWENTY/HUNDRED) + (student.getPracticalMarks() * TEN/HUNDRED) + (student.getFinalExamMarks() * FIFTY/HUNDRED);
-			student.setOverallMarks(overallMarks);
+			for(Student student : studentList)
+			{
+				overallMarks = (student.getAssignment1Marks() * TWENTY/HUNDRED) + (student.getAssignment2Marks() * TWENTY/HUNDRED) + (student.getPracticalMarks() * TEN/HUNDRED) + (student.getFinalExamMarks() * FIFTY/HUNDRED);
+				student.setOverallMarks(overallMarks);
+			}
 		}
 
 	}
@@ -282,33 +288,37 @@ public class StudentManagementApp {
 	/**To compute students grade*/
 	public static void computeGrades()
 	{
-		for(Student student : studentList)
-		{
-			if(student.getOverallMarks() >= EIGHTY && student.getOverallMarks() <= HUNDRED)
-			{
-				student.setGrade(HD);
-			}
-			else if(student.getOverallMarks() >= SEVENTY && student.getOverallMarks() < EIGHTY)
-			{
-				student.setGrade(D);
-			}
-			else if(student.getOverallMarks() >= SIXTY && student.getOverallMarks() < SEVENTY)
-			{
-				student.setGrade(C);
-			}
-			else if(student.getOverallMarks() >= FIFTY && student.getOverallMarks() < SIXTY)
-			{
-				student.setGrade(P);
-			}
-			else if(student.getOverallMarks() >= ZERO_INT && student.getOverallMarks() < FIFTY)
-			{
-				student.setGrade(F);
-			}
-			else
-			{
-				student.setGrade(NA);
-			}
 
+		if(!studentList.isEmpty())
+		{
+			for(Student student : studentList)
+			{
+				if(student.getOverallMarks() >= EIGHTY && student.getOverallMarks() <= HUNDRED)
+				{
+					student.setGrade(HD);
+				}
+				else if(student.getOverallMarks() >= SEVENTY && student.getOverallMarks() < EIGHTY)
+				{
+					student.setGrade(D);
+				}
+				else if(student.getOverallMarks() >= SIXTY && student.getOverallMarks() < SEVENTY)
+				{
+					student.setGrade(C);
+				}
+				else if(student.getOverallMarks() >= FIFTY && student.getOverallMarks() < SIXTY)
+				{
+					student.setGrade(P);
+				}
+				else if(student.getOverallMarks() >= ZERO_INT && student.getOverallMarks() < FIFTY)
+				{
+					student.setGrade(F);
+				}
+				else
+				{
+					student.setGrade(NA);
+				}
+
+			}
 		}
 	}
 
@@ -597,16 +607,17 @@ public class StudentManagementApp {
 	private static void deleteStudent() {
 
 		int deleteId = ZERO_INT;
-
-		System.out.println(ENTER_THE_STUDENT_ID);
-		deleteId = keyboard.nextInt();
-
 		int count = ZERO_INT;
 		int location = ZERO_INT;
 		boolean notFound = true;
 
 		if(!studentList.isEmpty())
 		{
+
+			System.out.println(ENTER_THE_STUDENT_ID);
+			deleteId = keyboard.nextInt();
+
+
 			for(Student student: studentList)
 			{
 				count++;
@@ -635,29 +646,35 @@ public class StudentManagementApp {
 	/**To display all student details*/
 	public static void displayStudentDetails()
 	{
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			System.out.println(student.toString());
+			for(Student student : studentList)
+			{
+				System.out.println(student.toString());
+			}
 		}
+
 	}
 
 	/**To compute the students average overall marks*/
 	public static void computeAverageOverallMarks()
 	{
-		computeMarks();
-
-		double totalOverallMarks = ZERO_DOUBLE;
-
-		for(Student student: studentList)
+		if(!studentList.isEmpty())
 		{
-			totalOverallMarks += student.getOverallMarks();
+			computeMarks();
+
+			double totalOverallMarks = ZERO_DOUBLE;
+
+			for(Student student: studentList)
+			{
+				totalOverallMarks += student.getOverallMarks();
+			}
+
+			averageOverallMarks = totalOverallMarks / studentList.size();
+
+			System.out.println(studentList.size() + STUDENT_ARE_IN_THE_LIST);
+			System.out.println(THE_AVERAGE_OVERALL_MARKS_IS +averageOverallMarks);
 		}
-
-		averageOverallMarks = totalOverallMarks / studentList.size();
-
-		System.out.println(studentList.size() + STUDENT_ARE_IN_THE_LIST);
-		System.out.println(THE_AVERAGE_OVERALL_MARKS_IS +averageOverallMarks);
-
 	}
 
 	/**To get the count of the student that marks is above or equals to average overall marks*/
@@ -665,11 +682,15 @@ public class StudentManagementApp {
 	{
 		int count = ZERO_INT;
 
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			if(student.getOverallMarks() >= averageOverallMarks)
+
+			for(Student student : studentList)
 			{
-				count++;
+				if(student.getOverallMarks() >= averageOverallMarks)
+				{
+					count++;
+				}
 			}
 		}
 
@@ -679,7 +700,6 @@ public class StudentManagementApp {
 	/**To get the count of the distribution of grades*/
 	public static void displayGradeCount()
 	{
-		computeGrades();
 
 		int hdCount = ZERO_INT;
 		int dCount = ZERO_INT;
@@ -688,41 +708,46 @@ public class StudentManagementApp {
 		int fCount = ZERO_INT;
 		int naCount = ZERO_INT;
 
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			if(student.getGrade().equalsIgnoreCase(HD))
+			computeGrades();
+
+			for(Student student : studentList)
 			{
-				hdCount++;
-			}
-			else if(student.getGrade().equalsIgnoreCase(D))
-			{
-				dCount++;
-			}
-			else if(student.getGrade().equalsIgnoreCase(C))
-			{
-				cCount++;
-			}
-			else if(student.getGrade().equalsIgnoreCase(P))
-			{
-				pCount++;
-			}
-			else if(student.getGrade().equalsIgnoreCase(F))
-			{
-				fCount++;
-			}
-			else
-			{
-				naCount++;
+				if(student.getGrade().equalsIgnoreCase(HD))
+				{
+					hdCount++;
+				}
+				else if(student.getGrade().equalsIgnoreCase(D))
+				{
+					dCount++;
+				}
+				else if(student.getGrade().equalsIgnoreCase(C))
+				{
+					cCount++;
+				}
+				else if(student.getGrade().equalsIgnoreCase(P))
+				{
+					pCount++;
+				}
+				else if(student.getGrade().equalsIgnoreCase(F))
+				{
+					fCount++;
+				}
+				else
+				{
+					naCount++;
+				}
+
 			}
 
+			System.out.println(NUMBER_OF_HD + hdCount);
+			System.out.println(NUMBER_OF_D + dCount);
+			System.out.println(NUMBER_OF_C + cCount);
+			System.out.println(NUMBER_OF_P + pCount);
+			System.out.println(NUMBER_OF_F + fCount);
+			System.out.println(NUMBER_OF_NA + naCount);
 		}
-
-		System.out.println(NUMBER_OF_HD + hdCount);
-		System.out.println(NUMBER_OF_D + dCount);
-		System.out.println(NUMBER_OF_C + cCount);
-		System.out.println(NUMBER_OF_P + pCount);
-		System.out.println(NUMBER_OF_F + fCount);
-		System.out.println(NUMBER_OF_NA + naCount);
 	}
 
 	/**To search student by id*/
@@ -731,20 +756,25 @@ public class StudentManagementApp {
 		int searchId;
 		boolean notFound = true;
 
-		System.out.println(ENTER_THE_STUDENT_ID);
-		searchId = keyboard.nextInt();
-
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			if(student.getId() == searchId)
-			{
-				System.out.println(student.toString()); 
-				notFound = false;
-			}
-		}
 
-		if(notFound)
-			System.out.println(STUDENT_ID_NOT_FOUND);
+			System.out.println(ENTER_THE_STUDENT_ID);
+			searchId = keyboard.nextInt();
+
+			for(Student student : studentList)
+			{
+				if(student.getId() == searchId)
+				{
+					System.out.println(student.toString()); 
+					notFound = false;
+				}
+			}
+
+			if(notFound)
+				System.out.println(STUDENT_ID_NOT_FOUND);
+
+		}
 
 	}
 
@@ -756,23 +786,27 @@ public class StudentManagementApp {
 
 		keyboard.nextLine();
 
-		System.out.println(ENTER_THE_STUDENT_NAME);
-		searchName = keyboard.nextLine();
-
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
 
-			if(student.getFirstName().equalsIgnoreCase(searchName))
+			System.out.println(ENTER_THE_STUDENT_NAME);
+			searchName = keyboard.nextLine();
+
+			for(Student student : studentList)
 			{
-				System.out.println(student.toString());
-				notFound = false;
+
+				if(student.getFirstName().equalsIgnoreCase(searchName))
+				{
+					System.out.println(student.toString());
+					notFound = false;
+				}
+
 			}
 
-		}
-
-		if(notFound)
-		{
-			System.out.println(STUDENT_NAME_NOT_FOUND);
+			if(notFound)
+			{
+				System.out.println(STUDENT_NAME_NOT_FOUND);
+			}
 		}
 	}
 
@@ -784,87 +818,101 @@ public class StudentManagementApp {
 		String highestStudent = EMPTY_STR;
 		String secondHighestStudent = EMPTY_STR;
 
-		for(Student student : studentList)
+		if(!studentList.isEmpty())
 		{
-			if(student.getOverallMarks() > highestMarks)
+			for(Student student : studentList)
 			{
-				highestStudent = student.getFirstName() + student.getLastName();
-				highestMarks = student.getOverallMarks();
-			}
-		}
-
-		for(Student student : studentList)
-		{
-			if(student.getOverallMarks() != highestMarks)
-			{
-				if(student.getOverallMarks() > secondHighestMarks)
+				if(student.getOverallMarks() > highestMarks)
 				{
-					secondHighestStudent = student.getFirstName() + student.getLastName();
-					secondHighestMarks = student.getOverallMarks();
+					highestStudent = student.getFirstName() + SPACE +student.getLastName();
+					highestMarks = student.getOverallMarks();
 				}
 			}
+
+			for(Student student : studentList)
+			{
+				if(student.getOverallMarks() != highestMarks)
+				{
+					if(student.getOverallMarks() > secondHighestMarks)
+					{
+						secondHighestStudent = student.getFirstName() + SPACE + student.getLastName();
+						secondHighestMarks = student.getOverallMarks();
+					}
+				}
+			}
+
+			System.out.println(HIGHEST_OVERALL_MARKS + highestStudent);
+			System.out.println(OVERALL_MARKS +highestMarks);
+
+			System.out.println();
+
+			System.out.println(SECOND_HIGHEST_OVERALL_MARKS + secondHighestStudent);
+			System.out.println(OVERALL_MARKS +secondHighestMarks);
+
 		}
-
-		System.out.println(HIGHEST_OVERALL_MARKS + highestStudent);
-		System.out.println(OVERALL_MARKS +highestMarks);
-
-		System.out.println();
-
-		System.out.println(SECOND_HIGHEST_OVERALL_MARKS + secondHighestStudent);
-		System.out.println(OVERALL_MARKS +secondHighestMarks);
 	}
 
 	/**To sort the student list in ascending order by student id*/
 	public static void sortStudentListByIDInAscendingOrder()
 	{
-		Comparator<Student> studentIDComparator = new Comparator<Student>()
+		if(!studentList.isEmpty())
 		{
-			public int compare(Student s1, Student s2) {
 
-				if(s1.getId() == s2.getId())
-				{
-					return 0;
-				}
-				else if(s1.getId() > s2.getId())
-				{
-					return 1;
-				}
-				else
-				{
-					return -1;
-				}
+			Comparator<Student> studentIDComparator = new Comparator<Student>()
+			{
+				public int compare(Student s1, Student s2) {
 
+					if(s1.getId() == s2.getId())
+					{
+						return 0;
+					}
+					else if(s1.getId() > s2.getId())
+					{
+						return 1;
+					}
+					else
+					{
+						return -1;
+					}
+
+				}
+			};
+
+			Collections.sort(studentList, studentIDComparator);
+
+			System.out.println(DISPLAYING_SORTED_LIST);
+
+			for(Student student : studentList)
+			{
+				System.out.println(student.toString());
 			}
-		};
 
-		Collections.sort(studentList, studentIDComparator);
-
-		System.out.println(DISPLAYING_SORTED_LIST);
-
-		for(Student student : studentList)
-		{
-			System.out.println(student.toString());
 		}
 	}
 
 	/**To sort the student list in ascending order by student name*/
 	public static void sortStudentListByNameInAscendingOrder()
 	{
-		Comparator<Student> studentNameComparator = new Comparator<Student>()
+		if(!studentList.isEmpty())
 		{
-			public int compare(Student s1, Student s2) {
 
-				return s1.getLastName().compareTo(s2.getLastName());  
+			Comparator<Student> studentNameComparator = new Comparator<Student>()
+			{
+				public int compare(Student s1, Student s2) {
+
+					return s1.getLastName().compareTo(s2.getLastName());  
+				}
+			};
+
+			Collections.sort(studentList, studentNameComparator);
+
+			System.out.println(DISPLAYING_SORTED_LIST);
+
+			for(Student student : studentList)
+			{
+				System.out.println(student.toString());
 			}
-		};
 
-		Collections.sort(studentList, studentNameComparator);
-
-		System.out.println(DISPLAYING_SORTED_LIST);
-
-		for(Student student : studentList)
-		{
-			System.out.println(student.toString());
 		}
 	}
 
@@ -877,18 +925,21 @@ public class StudentManagementApp {
 		double sumsq = ZERO_DOUBLE;
 		double sum = ZERO_DOUBLE;
 
-		computeMarks();
-
-		for(Student student: studentList)
+		if(!studentList.isEmpty())
 		{
-			score = student.getOverallMarks();
-			sumsq += Math.pow(score, TWO);
-			sum += score; 
+			computeMarks();
+
+			for(Student student: studentList)
+			{
+				score = student.getOverallMarks();
+				sumsq += Math.pow(score, TWO);
+				sum += score; 
+			}
+
+			mean = sum / studentList.size(); 
+			sd = Math.sqrt((sumsq / studentList.size()) - Math.pow(mean, TWO)); 
+
+			System.out.println(STANDARD_DEVIATION +sd);
 		}
-
-		mean = sum / studentList.size(); 
-		sd = Math.sqrt((sumsq / studentList.size()) - Math.pow(mean, TWO)); 
-
-		System.out.println(STANDARD_DEVIATION +sd);
 	}
 }
