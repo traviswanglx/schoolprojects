@@ -16,7 +16,7 @@
 
 <img width="252" alt="4" src="https://user-images.githubusercontent.com/88640243/140630983-9c2191fb-1a55-40f8-9a98-57dd13f6ce60.PNG">
 
-**5. enter 7 to display the number of student that overall marks is above or equals to average overall marks **
+**5. enter 7 to display the number of student that overall marks is above or equals to average overall marks**
 <img width="484" alt="5" src="https://user-images.githubusercontent.com/88640243/140630984-62f4d971-1a8b-4a1f-ba07-45ca25f117d2.PNG">
 
 **6. enter 8 to compute and display grade count** 
