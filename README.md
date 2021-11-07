@@ -1,6 +1,7 @@
 # schoolprojects
 
 **1. program started**
+
 <img width="873" alt="1" src="https://user-images.githubusercontent.com/88640243/140630975-19d19179-0fbc-417d-bce1-07ccb734357e.PNG">
 
 **2. enter 15 to initialize sample data**
